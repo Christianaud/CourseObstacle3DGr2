@@ -7,29 +7,46 @@ public class Player : MonoBehaviour
 
     private Animator _animator;
     private PlayerInputActions _playerInputActions;
+    private Rigidbody _rb;
 
     private void Start()
     {
         _animator = GetComponentInChildren<Animator>();
+        _rb = GetComponent<Rigidbody>();
+
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
     }
 
-    private void Update()
+    private void FixedUpdate()
+    {
+        PlayerMovement();
+
+    }
+
+    private void PlayerMovement()
     {
         // Old Input Manager
         // float directionX = Input.GetAxisRaw("Horizontal");
         // float directionZ = Input.GetAxisRaw("Vertical");
 
+        // New Input Actions
         Vector2 direction2D = _playerInputActions.Player.Move.ReadValue<Vector2>();
-        
+
         Vector3 direction = new Vector3(direction2D.x, 0f, direction2D.y);
 
         direction.Normalize();  // normalise la vecteur à 1
 
-        transform.Translate(direction * Time.deltaTime * _playerSpeed, Space.World);
+        // Déplacement (téléporation) dans la direction du vecteur
+        // transform.Translate(direction * Time.deltaTime * _playerSpeed, Space.World);
 
-        if(direction != Vector3.zero)
+        // Déplacement à une vitesse donné dans la direction du vecteur
+        _rb.linearVelocity = direction * Time.fixedDeltaTime * _playerSpeed;
+        
+        // Pousser le corps dans la direction du vecteur
+        //_rb.AddForce(direction * Time.fixedDeltaTime * _playerSpeed);
+
+        if (direction != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation
@@ -42,6 +59,5 @@ public class Player : MonoBehaviour
         {
             _animator.SetBool("isWalking", false);
         }
-
     }
 }
