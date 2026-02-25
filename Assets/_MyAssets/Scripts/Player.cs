@@ -16,6 +16,19 @@ public class Player : MonoBehaviour
 
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
+        _playerInputActions.Player.Dance.performed += Dance_performed;
+    }
+
+    private void Dance_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        _animator.SetBool("isDancing", true);
+    }
+
+    private void OnDestroy()
+    {
+        _playerInputActions.Player.Dance.performed -= Dance_performed;
+        _playerInputActions.Player.Disable();
+        
     }
 
     private void FixedUpdate()
@@ -58,6 +71,12 @@ public class Player : MonoBehaviour
         else
         {
             _animator.SetBool("isWalking", false);
+            _animator.SetBool("isDancing", false);
         }
+    }
+
+    public void DestroyPLayer()
+    {
+        Destroy(gameObject);
     }
 }

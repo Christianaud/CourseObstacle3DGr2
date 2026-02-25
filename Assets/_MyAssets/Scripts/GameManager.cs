@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     }
 
     private int _nbCollisions;
+    public int NbCollision => _nbCollisions; // accesseur public
 
     private void Start()
     {
@@ -28,6 +30,6 @@ public class GameManager : MonoBehaviour
     public void AddCollision(int p_value)
     {
         _nbCollisions += p_value;
-        Debug.Log("Nombre de collision(s) : " + _nbCollisions);
+        // Debug.Log("Nombre de collision(s) : " + _nbCollisions);
     }
 }
