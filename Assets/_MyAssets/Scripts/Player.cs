@@ -1,7 +1,11 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public static event EventHandler OnPlayerPaused;
+    
     [SerializeField] private float _playerSpeed = 10f;
     [SerializeField] private float _playerRotationSpeed = 700f;
 
@@ -17,11 +21,21 @@ public class Player : MonoBehaviour
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
         _playerInputActions.Player.Dance.performed += Dance_performed;
+        _playerInputActions.Player.Pause.performed += Pause_performed;
+    }
+
+    private void Pause_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPlayerPaused?.Invoke(this, EventArgs.Empty);
     }
 
     private void Dance_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        _animator.SetBool("isDancing", true);
+        
+        if (SceneManager.GetActiveScene().buildIndex == 1) 
+        {
+            _animator.SetBool("isDancing", true);
+        }
     }
 
     private void OnDestroy()
@@ -71,7 +85,10 @@ public class Player : MonoBehaviour
         else
         {
             _animator.SetBool("isWalking", false);
-            _animator.SetBool("isDancing", false);
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                _animator.SetBool("isDancing", false);
+            }
         }
     }
 
