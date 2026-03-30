@@ -66,6 +66,4 @@ public class GameManager : MonoBehaviour
     {
         _nbCollisions += e.CollisionValue;
     }
-
-
 }

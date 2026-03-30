@@ -29,5 +29,4 @@ public class UIEnd : UI
         float total = GameManager.Instance.NbCollision + GameManager.Instance.EndTime;
         _txtFinal.text = $"Temps final : {total:F2} sec.";
     }
-
 }

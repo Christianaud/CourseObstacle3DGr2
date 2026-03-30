@@ -6,8 +6,6 @@ public class EndLevel : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        
-
         if (collision.gameObject.CompareTag("Player"))
         {
             int noScene = SceneManager.GetActiveScene().buildIndex;
@@ -23,9 +21,6 @@ public class EndLevel : MonoBehaviour
                 GameManager.Instance.EndTime = Time.time - GameManager.Instance.StartTime;
                 SceneManager.LoadScene(noScene + 1);
             }
-               
-            
-
         }
     }
 }
