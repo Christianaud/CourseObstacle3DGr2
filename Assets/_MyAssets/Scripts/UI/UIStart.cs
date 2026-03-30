@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIStart : MonoBehaviour
+public class UIStart : UI
 {
     [SerializeField] private GameObject _instructionsPanel;
     [SerializeField] private GameObject _gameButtons;
@@ -28,15 +28,6 @@ public class UIStart : MonoBehaviour
     private void Start()
     {
         EventSystem.current.SetSelectedGameObject(_buttonStart.gameObject);
-    }
-
-    public void OnQuitClick()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();   // Quitte le programme exécutable
-#endif
     }
 
     public void OnInstructionsClick()

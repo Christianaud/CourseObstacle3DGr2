@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UIGame : MonoBehaviour
+public class UIGame : UI
 {
     public static UIGame Instance;
     
@@ -71,22 +71,9 @@ public class UIGame : MonoBehaviour
         CollisionDisplayUI();
     }
 
-    public void OnQuitClick()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();   // Quitte le programme exécutable
-#endif
-    }
-
-    public void OnRestartClick()
-    {
-        SceneManager.LoadScene(0);
-    }
-
     public void OnContinueClick()
     {
         // Reprendre le jeu
+        Player.TriggerOnPlayerPaused(this);
     }
 }

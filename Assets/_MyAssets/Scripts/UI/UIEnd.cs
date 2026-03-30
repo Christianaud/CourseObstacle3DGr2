@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIEnd : MonoBehaviour
+public class UIEnd : UI
 {
     [SerializeField] private Button _buttonRestart;
     [SerializeField] private TextMeshProUGUI _txtTotalTime;
@@ -30,17 +30,4 @@ public class UIEnd : MonoBehaviour
         _txtFinal.text = $"Temps final : {total:F2} sec.";
     }
 
-    public void OnRestartClick()
-    {
-        SceneManager.LoadScene(0);
-    }
-
-    public void OnQuitClick()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();   // Quitte le programme exécutable
-#endif
-    }
 }
